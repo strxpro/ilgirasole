@@ -26,7 +26,7 @@ export default function Footer() {
         <footer className="bg-brown-deep text-cream/80">
             {/* Main Footer */}
             <div className="max-w-7xl mx-auto px-6 py-14 sm:py-16">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-8">
                     {/* Brand */}
                     <div className="sm:col-span-2 lg:col-span-1">
                         <div className="flex items-center gap-3 mb-5">
@@ -92,11 +92,11 @@ export default function Footer() {
                         <ul className="space-y-3">
                             <li>
                                 <a
-                                    href="tel:+390789754321"
+                                    href="tel:+393793564407"
                                     className="flex items-center gap-2 text-cream/50 hover:text-gold text-sm transition-colors duration-300"
                                 >
                                     <Phone size={14} />
-                                    <span>+39 0789 754 321</span>
+                                    <span>+39 379 356 4407</span>
                                 </a>
                             </li>
                             <li>
@@ -121,31 +121,6 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Newsletter */}
-                    <div>
-                        <h4 className="font-serif text-sm font-semibold text-gold tracking-wider uppercase mb-5">
-                            {t.footer.newsletter}
-                        </h4>
-                        <p className="text-cream/50 text-sm mb-4 leading-relaxed">
-                            {t.footer.newsletterDesc}
-                        </p>
-                        <form
-                            onSubmit={(e) => e.preventDefault()}
-                            className="flex flex-col gap-3"
-                        >
-                            <input
-                                type="email"
-                                placeholder={t.footer.emailPlaceholder}
-                                className="w-full px-4 py-2.5 bg-cream/5 border border-cream/10 rounded-sm text-cream text-sm placeholder:text-cream/30 focus:outline-none focus:border-gold/40 transition-colors duration-300"
-                            />
-                            <button
-                                type="submit"
-                                className="px-4 py-2.5 bg-terracotta hover:bg-terracotta-dark text-cream text-sm tracking-wider uppercase rounded-sm transition-colors duration-300"
-                            >
-                                {t.footer.subscribe}
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
 
