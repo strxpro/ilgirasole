@@ -1,24 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const Map = dynamic(() => import("./Map"), {
-    ssr: false,
-    loading: () => (
-        <div className="w-full h-[450px] bg-brown-deep/5 flex items-center justify-center rounded-sm border border-gold/10">
-            <div className="animate-pulse text-gold">Caricamento mappa...</div>
-        </div>
-    ),
-});
-
 export default function ContactSection() {
     const { t } = useLanguage();
-
-    const restaurantCoords: [number, number] = [41.2414, 9.1889];
-    const googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=41.2414,9.1889";
 
     return (
         <section id="contact" className="py-16 sm:py-24 bg-cream">
@@ -158,16 +145,16 @@ export default function ContactSection() {
                         className="relative"
                     >
                         <div className="sticky top-24">
-                            <div className="rounded-sm overflow-hidden shadow-lg border border-gold/10 relative group">
-                                <div className="absolute inset-x-0 top-0 z-10 p-3 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <div className="bg-brown-deep/60 backdrop-blur-sm text-cream text-[10px] px-3 py-1.5 rounded-full inline-block">
-                                        Zoom con scroll · Click per indicazioni
-                                    </div>
-                                </div>
-                                <Map
-                                    center={restaurantCoords}
-                                    zoom={15}
-                                    destinationUrl={googleMapsUrl}
+                            <div className="rounded-sm overflow-hidden shadow-lg border border-gold/10">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.5!2d9.1875021!3d41.2423084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d960029bfaa17b%3A0x9ff7772eab6de6d0!2sIl%20Girasole!5e0!3m2!1sit!2sit!4v1700000000000!5m2!1sit!2sit"
+                                    width="100%"
+                                    height="450"
+                                    style={{ border: 0 }}
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                    title="Il Girasole - Google Maps"
                                 />
                             </div>
                             <div className="mt-4 p-4 bg-white-warm rounded-sm border border-gold/10">
