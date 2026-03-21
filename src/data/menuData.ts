@@ -403,7 +403,7 @@ export const menuData: MenuData = {
           name: "Calzone Napoletano",
           description: "Pomodoro, mozzarella, salame, ricotta, pepe nero",
           price: "€13,00",
-          icon: "�",
+          icon: "🍕",
         },
         {
           id: "piz-8",
@@ -438,7 +438,7 @@ export const menuData: MenuData = {
           name: "Posilippo",
           description: "Mozzarella, pomodori rossi, pomodori gialli, salsiccia fresca, gorgonzola",
           price: "€16,00",
-          icon: "�",
+          icon: "🍕",
         },
         {
           id: "piz-13",
