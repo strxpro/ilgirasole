@@ -58,7 +58,7 @@ export const menuData: MenuData = {
           name: "Rana pescatrice alla catalana",
           description: "Rana pescatrice preparata alla catalana",
           price: "€19,00",
-          icon: "�",
+          icon: "🐟",
         },
         {
           id: "ant-6",
@@ -231,7 +231,7 @@ export const menuData: MenuData = {
           name: "Calamaro arrosto",
           description: "Calamaro arrosto alla griglia",
           price: "€22,00",
-          icon: "�",
+          icon: "🦑",
         },
         {
           id: "sm-5",
@@ -320,7 +320,7 @@ export const menuData: MenuData = {
           name: "Insalata Mista",
           description: "Insalata verde, radicchio, pomodorini",
           price: "€7,00",
-          icon: "�",
+          icon: "🥗",
         },
         {
           id: "con-5",
@@ -348,7 +348,7 @@ export const menuData: MenuData = {
           name: "Rucola Noci e Pecorino",
           description: "Rucola fresca con noci e pecorino",
           price: "€15,00",
-          icon: "�",
+          icon: "🥗",
         },
       ],
     },
@@ -486,7 +486,7 @@ export const menuData: MenuData = {
           name: "Tiramisù",
           description: "Tiramisù classico della casa",
           price: "€7,50",
-          icon: "�",
+          icon: "🍰",
         },
         {
           id: "dol-2",
