@@ -1,15 +1,27 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
-import Script from "next/script";
 
 const GOOGLE_REVIEW_LINK =
     "https://www.google.com/search?sca_esv=1f1bc4ebf15b2244&sxsrf=ANbL-n4tGotRNxHR1-UH0PdtvqWwhk_c9g:1774111202140&q=Il+Girasole+Opinie&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ1MrMwNLIwNDYzMDMGssxMNjAyvmIU8sxRcM8sSizOz0lV8C_IzMtMXcSKRRAAB7z24EUAAAA&rldimm=11526812813606381264&tbm=lcl&hl=pl-PL&sa=X&ved=2ahUKEwivlvuft7GTAxWYIRAIHSAHGWkQ9fQKegQIUxAI&biw=1920&bih=919&dpr=1#lkt=LocalPoiReviews";
 
 export default function ReviewsCarousel() {
     const { t } = useLanguage();
+    const widgetRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!widgetRef.current) return;
+        const existing = widgetRef.current.querySelector("script");
+        if (existing) return;
+        const script = document.createElement("script");
+        script.src = "https://cdn.trustindex.io/loader.js?e43ab6767464773eda36526823c";
+        script.async = true;
+        script.defer = true;
+        widgetRef.current.appendChild(script);
+    }, []);
 
     return (
         <section id="reviews" className="relative py-20 sm:py-28 overflow-hidden">
@@ -47,12 +59,7 @@ export default function ReviewsCarousel() {
                 </motion.div>
 
                 {/* Trustindex Google Reviews Widget */}
-                <div className="mb-14">
-                    <Script
-                        src="https://cdn.trustindex.io/loader.js?e43ab6767464773eda36526823c"
-                        strategy="lazyOnload"
-                    />
-                </div>
+                <div ref={widgetRef} className="mb-14" />
 
                 {/* CTA links */}
                 <motion.div
