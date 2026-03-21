@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function ReviewsCarousel() {
@@ -55,7 +56,21 @@ export default function ReviewsCarousel() {
                 </motion.div>
 
                 {/* Trustindex Google Reviews Widget */}
-                <div ref={widgetRef} />
+                <div ref={widgetRef} className="mb-10" />
+
+                {/* TripAdvisor link */}
+                <div className="text-center">
+                    <a
+                        href="https://www.tripadvisor.com/Restaurant_Review-g608922-d1837416-Reviews-Il_Girasole-Santa_Teresa_Gallura_Province_of_Olbia_Tempio_Sardinia.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-brown-medium/40 hover:text-[#00AF87] transition-colors duration-300"
+                    >
+                        <span className="text-lg">🦉</span>
+                        <span>{t.reviews.orOnTripadvisor}</span>
+                        <ExternalLink size={12} />
+                    </a>
+                </div>
             </div>
         </section>
     );
