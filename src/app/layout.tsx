@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     "Italian restaurant",
     "Il Girasole",
   ],
+  icons: {
+    icon: "/logo-sunflower.png",
+    apple: "/logo-sunflower.png",
+  },
   openGraph: {
     title: "Il Girasole | Ristorante & Pizzeria",
     description:
