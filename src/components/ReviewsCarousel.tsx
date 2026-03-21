@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, ExternalLink, Quote } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import Script from "next/script";
 
 // ──────────────────────────────────────────────────────────────────────
 // 🔗 LINK DO WYSTAWIENIA OPINII W GOOGLE
@@ -365,6 +366,16 @@ export default function ReviewsCarousel() {
                         </a>
                     </div>
                 </motion.div>
+
+                    {/* Trustindex Google Reviews Widget */}
+                    <div className="mt-12 flex justify-center">
+                        <div className="w-full max-w-4xl">
+                            <Script
+                                src="https://cdn.trustindex.io/loader.js?e43ab6767464773eda36526823c"
+                                strategy="lazyOnload"
+                            />
+                        </div>
+                    </div>
             </div>
         </section>
     );

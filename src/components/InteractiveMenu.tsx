@@ -11,8 +11,20 @@ interface InteractiveMenuProps {
     type: "ristorante" | "bar";
 }
 
+const EUR_TO_PLN = 4.28;
+
+function convertPrice(priceStr: string): string | null {
+    const match = priceStr.match(/(\d+)[,.]?(\d*)/);
+    if (!match) return null;
+    const euros = parseFloat(`${match[1]}.${match[2] || "0"}`);
+    const pln = (euros * EUR_TO_PLN).toFixed(0);
+    return `~${pln} zł`;
+}
+
 export default function InteractiveMenu({ categories, type }: InteractiveMenuProps) {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const showTranslatedName = lang !== "it";
+    const showPln = lang === "pl";
     const [activeCategory, setActiveCategory] = useState(categories[0]?.id || "");
     const [mobileAccordion, setMobileAccordion] = useState<string | null>(categories[0]?.id || null);
 
@@ -133,18 +145,30 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                                             </div>
                                         )}
                                         <div className="flex-1">
-                                            <div className="flex items-baseline gap-3 mb-2">
+                                            <div className="flex items-baseline gap-3 mb-1">
                                                 <h3 className="font-serif text-lg font-semibold text-brown-deep group-hover:text-terracotta transition-colors duration-300">
                                                     {item.name}
                                                 </h3>
                                                 <div className="flex-1 border-b border-dotted border-gold/30 min-w-[30px] relative top-[-4px]" />
-                                                <span
-                                                    className="font-serif text-lg font-bold tracking-wide shrink-0"
-                                                    style={{ color: type === "ristorante" ? "#C75B39" : "#3E4A35" }}
-                                                >
-                                                    {item.price}
-                                                </span>
+                                                <div className="text-right shrink-0">
+                                                    <span
+                                                        className="font-serif text-lg font-bold tracking-wide"
+                                                        style={{ color: type === "ristorante" ? "#C75B39" : "#3E4A35" }}
+                                                    >
+                                                        {item.price}
+                                                    </span>
+                                                    {showPln && convertPrice(item.price) && (
+                                                        <span className="block text-xs text-brown-medium/50">
+                                                            {convertPrice(item.price)}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
+                                            {showTranslatedName && t.menuNames[item.id] && (
+                                                <p className="text-brown-medium/50 text-xs italic mb-1">
+                                                    {t.menuNames[item.id]}
+                                                </p>
+                                            )}
                                             <p className="text-brown-medium/60 text-sm leading-relaxed">
                                                 {t.menuDescriptions[item.id] || item.description}
                                             </p>
@@ -215,13 +239,25 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                                                             <h3 className="font-serif text-base font-semibold text-brown-deep">
                                                                 {item.name}
                                                             </h3>
-                                                            <span
-                                                                className="font-serif text-base font-bold ml-auto shrink-0"
-                                                                style={{ color: type === "ristorante" ? "#C75B39" : "#3E4A35" }}
-                                                            >
-                                                                {item.price}
-                                                            </span>
+                                                            <div className="text-right ml-auto shrink-0">
+                                                                <span
+                                                                    className="font-serif text-base font-bold"
+                                                                    style={{ color: type === "ristorante" ? "#C75B39" : "#3E4A35" }}
+                                                                >
+                                                                    {item.price}
+                                                                </span>
+                                                                {showPln && convertPrice(item.price) && (
+                                                                    <span className="block text-[10px] text-brown-medium/50">
+                                                                        {convertPrice(item.price)}
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                         </div>
+                                                        {showTranslatedName && t.menuNames[item.id] && (
+                                                            <p className="text-brown-medium/50 text-[11px] italic mb-1">
+                                                                {t.menuNames[item.id]}
+                                                            </p>
+                                                        )}
                                                         <p className="text-brown-medium/60 text-xs leading-relaxed">
                                                             {t.menuDescriptions[item.id] || item.description}
                                                         </p>
