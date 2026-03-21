@@ -45,7 +45,7 @@ export default function Footer() {
                         </p>
                         <div className="flex items-center gap-3">
                             <a
-                                href="https://www.instagram.com/ristorante_il_girasole_stg/"
+                                href="https://www.instagram.com/_ilgirasole26/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-9 h-9 rounded-full bg-cream/5 hover:bg-gold/20 flex items-center justify-center transition-colors duration-300"

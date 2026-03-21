@@ -9,7 +9,7 @@ import path from "path";
  * If no cache exists, returns empty (SocialFeed shows placeholders).
  */
 
-const INSTAGRAM_USERNAME = "ristorante_il_girasole_stg";
+const INSTAGRAM_USERNAME = "_ilgirasole26";
 const FACEBOOK_PAGE = "ristoranteilgirasole";
 const CACHE_DIR = path.join(process.cwd(), ".cache");
 const CACHE_FILE = path.join(CACHE_DIR, "social-feed.json");

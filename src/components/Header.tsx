@@ -154,7 +154,7 @@ export default function Header() {
                     {/* Social icons */}
                     <div className="flex items-center gap-3 ml-2 pl-4 border-l border-cream/20">
                         <a
-                            href="https://www.instagram.com/ristorante_il_girasole_stg/"
+                            href="https://www.instagram.com/_ilgirasole26/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-cream/60 hover:text-gold transition-colors duration-300"
@@ -290,7 +290,7 @@ export default function Header() {
                             ))}
                             <div className="flex items-center gap-4 mt-2 pt-4 border-t border-cream/10">
                                 <a
-                                    href="https://www.instagram.com/ristorante_il_girasole_stg/"
+                                    href="https://www.instagram.com/_ilgirasole26/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-cream/60 hover:text-gold transition-colors"
