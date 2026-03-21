@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const EVENT_DATE = new Date("2026-03-21T18:00:00+01:00");
+const EVENT_DATE = new Date("2026-03-21T17:00:00+01:00");
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
@@ -113,10 +113,9 @@ function ConfettiPieceEl({ piece }: { piece: ConfettiPiece }) {
                 top: piece.y,
                 opacity: piece.opacity,
                 animation: `confettiFall ${piece.fallDuration}s linear forwards, confettiSway ${piece.swayDuration}s ease-in-out infinite alternate`,
-                transform: `rotate(${piece.rotation}deg)`,
             }}
         >
-            <div style={shapeStyle} />
+            <div style={{ ...shapeStyle, transform: `rotate(${piece.rotation}deg)` }} />
         </div>
     );
 }

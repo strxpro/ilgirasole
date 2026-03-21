@@ -83,10 +83,10 @@ export default function ContactSection() {
                                     {t.contact.phone}
                                 </h3>
                                 <a
-                                    href="tel:+390789754321"
+                                    href="tel:+393793564407"
                                     className="text-brown-medium/60 text-sm hover:text-terracotta transition-colors duration-300"
                                 >
-                                    +39 0789 754 321
+                                    +39 379 356 4407
                                 </a>
                                 <p className="text-brown-medium/40 text-xs mt-1">
                                     {t.contact.reservations}

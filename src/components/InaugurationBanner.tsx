@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PartyPopper, X, Calendar } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const EVENT_DATE = new Date("2026-03-21T18:00:00+01:00");
+const EVENT_DATE = new Date("2026-03-21T17:00:00+01:00");
 const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
 function isBannerExpired(): boolean {

@@ -11,7 +11,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 //    Aby go znaleźć: Google Maps → Il Girasole → "Napisz opinię" → skopiuj URL
 // ──────────────────────────────────────────────────────────────────────
 const GOOGLE_REVIEW_LINK =
-    "https://www.google.com/maps/search/Il+Girasole+Santa+Teresa+Gallura/@41.2414,9.1889,17z";
+    "https://www.google.com/search?sca_esv=1f1bc4ebf15b2244&sxsrf=ANbL-n4tGotRNxHR1-UH0PdtvqWwhk_c9g:1774111202140&q=Il+Girasole+Opinie&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ1MrMwNLIwNDYzMDMGssxMNjAyvmIU8sxRcM8sSizOz0lV8C_IzMtMXcSKRRAAB7z24EUAAAA&rldimm=11526812813606381264&tbm=lcl&hl=pl-PL&sa=X&ved=2ahUKEwivlvuft7GTAxWYIRAIHSAHGWkQ9fQKegQIUxAI&biw=1920&bih=919&dpr=1#lkt=LocalPoiReviews";
 
 // ──────────────────────────────────────────────────────────────────────
 // Przykładowe opinie (mockup — do podmienienia na widget)
@@ -354,7 +354,7 @@ export default function ReviewsCarousel() {
                     {/* TripAdvisor link */}
                     <div className="mt-4">
                         <a
-                            href="https://www.tripadvisor.com/Restaurant_Review-g194883-d0-Reviews-Il_Girasole-Santa_Teresa_Gallura_Province_of_Sassari_Sardinia.html"
+                            href="https://www.tripadvisor.com/Restaurant_Review-g608922-d1837416-Reviews-Il_Girasole-Santa_Teresa_Gallura_Province_of_Olbia_Tempio_Sardinia.html"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 text-sm text-brown-medium/40 hover:text-[#00AF87] transition-colors duration-300"

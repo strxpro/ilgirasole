@@ -97,6 +97,11 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                                 <p className="text-brown-medium/60 max-w-2xl mx-auto text-sm sm:text-base">
                                     {t.interactiveMenu.allergyNote}
                                 </p>
+                                {type === "bar" && (
+                                    <p className="text-amber-700/70 max-w-2xl mx-auto text-sm sm:text-base mt-3 bg-amber-50 rounded-sm p-3 border border-amber-200/50">
+                                        {t.interactiveMenu.barNote}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </motion.div>
@@ -230,6 +235,13 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                             </AnimatePresence>
                         </div>
                     ))}
+                    {type === "bar" && (
+                        <div className="mt-4 px-4">
+                            <p className="text-amber-700/70 text-xs sm:text-sm bg-amber-50 rounded-sm p-3 border border-amber-200/50">
+                                {t.interactiveMenu.barNote}
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
