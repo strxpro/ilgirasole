@@ -91,10 +91,10 @@ export default function ContactSection() {
                                     {t.contact.email}
                                 </h3>
                                 <a
-                                    href="mailto:info@ilgirasole-sardegna.it"
+                                    href="mailto:info@ristoranteilgirasole.com"
                                     className="text-brown-medium/60 text-sm hover:text-terracotta transition-colors duration-300"
                                 >
-                                    info@ilgirasole-sardegna.it
+                                    info@ristoranteilgirasole.com
                                 </a>
                             </div>
                         </div>
@@ -110,9 +110,8 @@ export default function ContactSection() {
                                 </h3>
                                 <div className="space-y-2">
                                     {[
-                                        { day: t.contact.mondayToFriday, hours: "12:00 — 15:00 · 19:00 — 23:30" },
-                                        { day: t.contact.saturday, hours: "12:00 — 16:00 · 18:30 — 00:00" },
-                                        { day: t.contact.sunday, hours: "12:00 — 16:00 · 19:00 — 23:00" },
+                                        { day: t.contact.wednesdayToSunday, hours: "12:00 — 15:00 · 19:00 — 23:00" },
+                                        { day: t.contact.mondayTuesday, hours: t.contact.hoursClosed },
                                     ].map((schedule) => (
                                         <div
                                             key={schedule.day}

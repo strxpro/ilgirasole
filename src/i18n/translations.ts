@@ -66,9 +66,8 @@ export interface Translations {
         reservations: string;
         barOpen: string;
         mapNote: string;
-        mondayToFriday: string;
-        saturday: string;
-        sunday: string;
+        wednesdayToSunday: string;
+        mondayTuesday: string;
     };
     // Footer
     footer: {
@@ -177,15 +176,14 @@ const translations: Record<LangCode, Translations> = {
             email: "Email",
             hours: "Orari di Apertura",
             hoursLunch: "Pranzo: 12:00–15:00",
-            hoursDinner: "Cena: 18:30–23:00",
-            hoursClosed: "Chiuso il Martedì",
-            reservations: "Prenotazioni aperte dal Lunedì alla Domenica",
+            hoursDinner: "Cena: 19:00–23:00",
+            hoursClosed: "Chiuso Lunedì e Martedì",
+            reservations: "Prenotazioni aperte dal Mercoledì alla Domenica",
             barOpen: "🌿 Bar aperto tutto il giorno dalle 10:00",
             mapNote:
                 "📍 Via Italia, 7 — nel cuore di Santa Teresa Gallura, Provincia della Gallura, Nord-Est Sardegna",
-            mondayToFriday: "Lunedì — Venerdì",
-            saturday: "Sabato",
-            sunday: "Domenica",
+            wednesdayToSunday: "Mercoledì — Domenica",
+            mondayTuesday: "Lunedì — Martedì",
         },
         footer: {
             description:
@@ -391,15 +389,14 @@ const translations: Record<LangCode, Translations> = {
             email: "Email",
             hours: "Opening Hours",
             hoursLunch: "Lunch: 12:00–15:00",
-            hoursDinner: "Dinner: 18:30–23:00",
-            hoursClosed: "Closed on Tuesdays",
-            reservations: "Reservations open Monday to Sunday",
+            hoursDinner: "Dinner: 19:00–23:00",
+            hoursClosed: "Closed on Monday and Tuesday",
+            reservations: "Reservations open Wednesday to Sunday",
             barOpen: "🌿 Bar open all day from 10:00",
             mapNote:
                 "📍 Via Italia, 7 — in the heart of Santa Teresa Gallura, Sardinia",
-            mondayToFriday: "Monday — Friday",
-            saturday: "Saturday",
-            sunday: "Sunday",
+            wednesdayToSunday: "Wednesday — Sunday",
+            mondayTuesday: "Monday — Tuesday",
         },
         footer: {
             description:
@@ -670,15 +667,14 @@ const translations: Record<LangCode, Translations> = {
             email: "E-Mail",
             hours: "Öffnungszeiten",
             hoursLunch: "Mittagessen: 12:00–15:00",
-            hoursDinner: "Abendessen: 18:30–23:00",
-            hoursClosed: "Dienstag geschlossen",
-            reservations: "Reservierungen Montag bis Sonntag",
+            hoursDinner: "Abendessen: 19:00–23:00",
+            hoursClosed: "Montag und Dienstag geschlossen",
+            reservations: "Reservierungen Mittwoch bis Sonntag",
             barOpen: "🌿 Bar ganztägig geöffnet ab 10:00",
             mapNote:
                 "📍 Via Italia, 7 — im Herzen von Santa Teresa Gallura, Sardinien",
-            mondayToFriday: "Montag — Freitag",
-            saturday: "Samstag",
-            sunday: "Sonntag",
+            wednesdayToSunday: "Mittwoch — Sonntag",
+            mondayTuesday: "Montag — Dienstag",
         },
         footer: {
             description:
@@ -949,15 +945,14 @@ const translations: Record<LangCode, Translations> = {
             email: "Email",
             hours: "Godziny Otwarcia",
             hoursLunch: "Lunch: 12:00–15:00",
-            hoursDinner: "Kolacja: 18:30–23:00",
-            hoursClosed: "Zamknięte we Wtorki",
-            reservations: "Rezerwacje otwarte od Poniedziałku do Niedzieli",
+            hoursDinner: "Kolacja: 19:00–23:00",
+            hoursClosed: "Zamknięte w Poniedziałek i Wtorek",
+            reservations: "Rezerwacje otwarte od Środy do Niedzieli",
             barOpen: "🌿 Bar otwarty cały dzień od 10:00",
             mapNote:
                 "📍 Via Italia, 7 — w sercu Santa Teresa Gallura, Sardynia",
-            mondayToFriday: "Poniedziałek — Piątek",
-            saturday: "Sobota",
-            sunday: "Niedziela",
+            wednesdayToSunday: "Środa — Niedziela",
+            mondayTuesday: "Poniedziałek — Wtorek",
         },
         footer: {
             description:
@@ -1228,15 +1223,14 @@ const translations: Record<LangCode, Translations> = {
             email: "Email",
             hours: "Heures d'ouverture",
             hoursLunch: "Déjeuner: 12h00–15h00",
-            hoursDinner: "Dîner: 18h30–23h00",
-            hoursClosed: "Fermé le Mardi",
-            reservations: "Réservations ouvertes du Lundi au Dimanche",
+            hoursDinner: "Dîner: 19h00–23h00",
+            hoursClosed: "Fermé Lundi et Mardi",
+            reservations: "Réservations ouvertes du Mercredi au Dimanche",
             barOpen: "🌿 Bar ouvert toute la journée dès 10h00",
             mapNote:
                 "📍 Via Italia, 7 — au cœur de Santa Teresa Gallura, Sardaigne",
-            mondayToFriday: "Lundi — Vendredi",
-            saturday: "Samedi",
-            sunday: "Dimanche",
+            wednesdayToSunday: "Mercredi — Dimanche",
+            mondayTuesday: "Lundi — Mardi",
         },
         footer: {
             description:
