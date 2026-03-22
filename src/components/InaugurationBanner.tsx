@@ -49,6 +49,7 @@ export default function InaugurationBanner() {
         }
     }, []);
 
+    // Client-only: check expiration and start countdown
     useEffect(() => {
         if (isBannerExpired()) {
             setExpired(true);
@@ -64,11 +65,11 @@ export default function InaugurationBanner() {
     }, []);
 
     useEffect(() => {
-        if (mounted) {
+        if (mounted && !expired) {
             const timeout = setTimeout(() => setVisible(true), 500);
             return () => clearTimeout(timeout);
         }
-    }, [mounted]);
+    }, [mounted, expired]);
 
     useEffect(() => {
         if (visible) {
@@ -85,10 +86,10 @@ export default function InaugurationBanner() {
         }
     }, [t, visible, dismissed, updateBannerHeight]);
 
+    // Don't render anything on server or before mount
     if (!mounted || expired) return null;
 
     const showBanner = visible && !dismissed;
-
     const eventPassed = timeLeft === null;
 
     return (
@@ -105,16 +106,23 @@ export default function InaugurationBanner() {
                     transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                     ref={bannerRef}
                     className="fixed top-0 left-0 right-0 z-[70]"
+                    onAnimationComplete={(def) => {
+                        if (def === "animate" || (typeof def === "object" && "y" in def && def.y === 0)) {
+                            updateBannerHeight();
+                        }
+                    }}
                 >
                     <div className="relative bg-gradient-to-r from-terracotta via-terracotta-dark to-terracotta shadow-md">
                         {/* Animated background shimmer */}
-                        <div className="absolute inset-0 opacity-20">
+                        <div className="absolute inset-0 opacity-20 overflow-hidden">
                             <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.15)_50%,transparent_75%)] bg-[length:200%_200%] animate-[shimmer_3s_ease-in-out_infinite]" />
                         </div>
 
-                        <div className="max-w-7xl mx-auto pl-4 pr-10 sm:pl-6 sm:pr-12 py-1.5 sm:py-2">
-                            {/* Desktop: single row */}
-                            <div className="hidden sm:flex items-center justify-center gap-3">
+                        {/* Content + Close button in flex row */}
+                        <div className="flex items-center">
+                            <div className="flex-1 min-w-0 max-w-7xl mx-auto px-3 sm:px-6 py-1.5 sm:py-2">
+                                {/* Desktop: single row */}
+                                <div className="hidden sm:flex items-center justify-center gap-3">
                                 <motion.div
                                     animate={{ rotate: [0, -10, 10, -10, 0] }}
                                     transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
@@ -204,19 +212,19 @@ export default function InaugurationBanner() {
                                         </div>
                                     )}
                                 </div>
+                                </div>
                             </div>
+
+                            {/* Close button - in flex row, never clipped */}
+                            <button
+                                onClick={() => setDismissed(true)}
+                                className="shrink-0 mr-2 sm:mr-3 w-7 h-7 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 border border-white/20 text-white transition-all duration-200 active:scale-90"
+                                aria-label="Close"
+                            >
+                                <X size={14} strokeWidth={2.5} />
+                            </button>
                         </div>
-
                     </div>
-
-                    {/* Close button - outside overflow area, always visible */}
-                    <button
-                        onClick={() => setDismissed(true)}
-                        className="absolute top-1/2 -translate-y-1/2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-black/25 hover:bg-black/40 text-white transition-all duration-200 active:scale-90"
-                        aria-label="Close"
-                    >
-                        <X size={16} strokeWidth={2.5} />
-                    </button>
                 </motion.div>
             )}
         </AnimatePresence>

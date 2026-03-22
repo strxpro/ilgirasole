@@ -16,6 +16,7 @@ export default function SunflowerLogo({
             width={size}
             height={size}
             className={className}
+            style={{ width: size, height: "auto" }}
             priority
         />
     );
