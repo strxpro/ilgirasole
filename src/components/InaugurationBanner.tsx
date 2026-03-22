@@ -78,12 +78,6 @@ export default function InaugurationBanner() {
         }
     }, [visible, updateBannerHeight]);
 
-    useEffect(() => {
-        if (dismissed) {
-            document.documentElement.style.setProperty("--banner-height", "0px");
-        }
-    }, [dismissed]);
-
     // Update banner height when language changes
     useEffect(() => {
         if (visible && !dismissed) {
@@ -91,13 +85,19 @@ export default function InaugurationBanner() {
         }
     }, [t, visible, dismissed, updateBannerHeight]);
 
-    if (!mounted || dismissed || expired) return null;
+    if (!mounted || expired) return null;
+
+    const showBanner = visible && !dismissed;
 
     const eventPassed = timeLeft === null;
 
     return (
-        <AnimatePresence>
-            {visible && (
+        <AnimatePresence
+            onExitComplete={() => {
+                document.documentElement.style.setProperty("--banner-height", "0px");
+            }}
+        >
+            {showBanner && (
                 <motion.div
                     initial={{ y: -100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -106,7 +106,7 @@ export default function InaugurationBanner() {
                     ref={bannerRef}
                     className="fixed top-0 left-0 right-0 z-[70]"
                 >
-                    <div className="relative overflow-hidden bg-gradient-to-r from-terracotta via-terracotta-dark to-terracotta shadow-md">
+                    <div className="relative bg-gradient-to-r from-terracotta via-terracotta-dark to-terracotta shadow-md">
                         {/* Animated background shimmer */}
                         <div className="absolute inset-0 opacity-20">
                             <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.15)_50%,transparent_75%)] bg-[length:200%_200%] animate-[shimmer_3s_ease-in-out_infinite]" />
@@ -207,15 +207,16 @@ export default function InaugurationBanner() {
                             </div>
                         </div>
 
-                        {/* Close button - always visible */}
-                        <button
-                            onClick={() => setDismissed(true)}
-                            className="absolute top-1/2 -translate-y-1/2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-black/25 hover:bg-black/40 text-white transition-all duration-200 active:scale-90"
-                            aria-label="Close"
-                        >
-                            <X size={16} strokeWidth={2.5} />
-                        </button>
                     </div>
+
+                    {/* Close button - outside overflow area, always visible */}
+                    <button
+                        onClick={() => setDismissed(true)}
+                        className="absolute top-1/2 -translate-y-1/2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-black/25 hover:bg-black/40 text-white transition-all duration-200 active:scale-90"
+                        aria-label="Close"
+                    >
+                        <X size={16} strokeWidth={2.5} />
+                    </button>
                 </motion.div>
             )}
         </AnimatePresence>
