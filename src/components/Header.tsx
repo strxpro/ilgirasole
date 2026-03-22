@@ -135,7 +135,7 @@ export default function Header() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             style={{ 
                 top: hidden ? "-200px" : "var(--banner-height, 0px)",
-                transition: "top 0.6s ease-in-out, background-color 0.5s, padding 0.5s, box-shadow 0.5s"
+                transition: "top 0.598s ease-in-out, background-color 0.5s, padding 0.5s, box-shadow 0.5s"
             }}
             className={`fixed left-0 right-0 z-50 ${scrolled
                 ? "bg-brown-deep/95 backdrop-blur-md shadow-lg py-3"
