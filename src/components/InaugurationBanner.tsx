@@ -40,47 +40,14 @@ export default function InaugurationBanner() {
     const [expired, setExpired] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [hidden, setHidden] = useState(false);
-    const hiddenRef = useRef(false);
     const bannerRef = useRef<HTMLDivElement>(null);
-    const lastScrollY = useRef(0);
-    const bannerHeight = useRef(0);
 
     const updateBannerHeight = useCallback(() => {
         if (bannerRef.current) {
             const h = bannerRef.current.offsetHeight;
-            bannerHeight.current = h;
-            if (!hiddenRef.current) {
-                document.documentElement.style.setProperty("--banner-height", `${h}px`);
-            }
+            document.documentElement.style.setProperty("--banner-height", `${h}px`);
         }
     }, []);
-
-    // Scroll direction detection: hide on scroll down, show on scroll up
-    useEffect(() => {
-        if (!visible || dismissed) return;
-        const handleScroll = () => {
-            const currentY = window.scrollY;
-            const delta = currentY - lastScrollY.current;
-            if (Math.abs(delta) < 5) return;
-            if (delta > 0 && currentY > 80) {
-                if (!hiddenRef.current) {
-                    hiddenRef.current = true;
-                    setHidden(true);
-                    document.documentElement.style.setProperty("--banner-height", "0px");
-                }
-            } else {
-                if (hiddenRef.current) {
-                    hiddenRef.current = false;
-                    setHidden(false);
-                    document.documentElement.style.setProperty("--banner-height", `${bannerHeight.current}px`);
-                }
-            }
-            lastScrollY.current = currentY;
-        };
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [visible, dismissed]);
 
     useEffect(() => {
         if (isBannerExpired()) {
@@ -117,7 +84,7 @@ export default function InaugurationBanner() {
         }
     }, [dismissed]);
 
-    // Update banner height when language changes (text size may differ)
+    // Update banner height when language changes
     useEffect(() => {
         if (visible && !dismissed) {
             requestAnimationFrame(updateBannerHeight);
@@ -133,56 +100,100 @@ export default function InaugurationBanner() {
             {visible && (
                 <motion.div
                     initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: hidden ? -bannerHeight.current : 0, opacity: 1 }}
+                    animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -100, opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                     ref={bannerRef}
                     className="fixed top-0 left-0 right-0 z-[70]"
                 >
-                    <div>
-                        <div className="relative overflow-hidden bg-gradient-to-r from-terracotta via-terracotta-dark to-terracotta shadow-md">
-                            {/* Animated background shimmer */}
-                            <div className="absolute inset-0 opacity-20">
-                                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.15)_50%,transparent_75%)] bg-[length:200%_200%] animate-[shimmer_3s_ease-in-out_infinite]" />
+                    <div className="relative overflow-hidden bg-gradient-to-r from-terracotta via-terracotta-dark to-terracotta shadow-md">
+                        {/* Animated background shimmer */}
+                        <div className="absolute inset-0 opacity-20">
+                            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.15)_50%,transparent_75%)] bg-[length:200%_200%] animate-[shimmer_3s_ease-in-out_infinite]" />
+                        </div>
+
+                        <div className="max-w-7xl mx-auto pl-4 pr-10 sm:pl-6 sm:pr-12 py-1.5 sm:py-2">
+                            {/* Desktop: single row */}
+                            <div className="hidden sm:flex items-center justify-center gap-3">
+                                <motion.div
+                                    animate={{ rotate: [0, -10, 10, -10, 0] }}
+                                    transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
+                                >
+                                    <PartyPopper size={14} className="text-gold" />
+                                </motion.div>
+                                <motion.span
+                                    animate={{ scale: [1, 1.05, 1] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    className="bg-gold text-brown-deep text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0"
+                                >
+                                    {t.inauguration.newManagement}
+                                </motion.span>
+                                <p className="text-cream text-xs font-medium leading-snug truncate">
+                                    {t.inauguration.title}
+                                </p>
+                                <span className="text-cream/30 shrink-0">|</span>
+                                <div className="flex items-center gap-1 text-gold/90 shrink-0">
+                                    <Calendar size={11} />
+                                    <span className="text-[11px] font-semibold tracking-wide uppercase whitespace-nowrap">
+                                        {t.inauguration.date}
+                                    </span>
+                                </div>
+                                <span className="text-cream/30 shrink-0">|</span>
+                                {eventPassed ? (
+                                    <motion.p
+                                        animate={{ scale: [1, 1.02, 1] }}
+                                        transition={{ duration: 1.5, repeat: Infinity }}
+                                        className="text-gold font-bold text-xs shrink-0"
+                                    >
+                                        {t.inauguration.eventStarted}
+                                    </motion.p>
+                                ) : (
+                                    <div className="flex items-center gap-0.5 shrink-0">
+                                        <CountdownUnit value={timeLeft.days} label={t.inauguration.days} />
+                                        <Separator />
+                                        <CountdownUnit value={timeLeft.hours} label={t.inauguration.hours} />
+                                        <Separator />
+                                        <CountdownUnit value={timeLeft.minutes} label={t.inauguration.minutes} />
+                                        <Separator />
+                                        <CountdownUnit value={timeLeft.seconds} label={t.inauguration.seconds} />
+                                    </div>
+                                )}
+                                <motion.div
+                                    animate={{ rotate: [0, 10, -10, 10, 0] }}
+                                    transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
+                                    className="shrink-0"
+                                >
+                                    <PartyPopper size={14} className="text-gold scale-x-[-1]" />
+                                </motion.div>
                             </div>
 
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 sm:py-2">
-                                {/* Desktop: single row */}
-                                <div className="hidden sm:flex items-center justify-center gap-3 pr-6">
-                                    <motion.div
-                                        animate={{ rotate: [0, -10, 10, -10, 0] }}
-                                        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
-                                    >
-                                        <PartyPopper size={14} className="text-gold" />
-                                    </motion.div>
+                            {/* Mobile: compact two-line layout */}
+                            <div className="flex sm:hidden flex-col items-center gap-0.5">
+                                <div className="flex items-center gap-1 w-full justify-center">
+                                    <PartyPopper size={11} className="text-gold shrink-0" />
                                     <motion.span
                                         animate={{ scale: [1, 1.05, 1] }}
                                         transition={{ duration: 2, repeat: Infinity }}
-                                        className="bg-gold text-brown-deep text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0"
+                                        className="bg-gold text-brown-deep text-[7px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0"
                                     >
                                         {t.inauguration.newManagement}
                                     </motion.span>
-                                    <p className="text-cream text-xs font-medium leading-snug truncate">
+                                    <p className="text-cream text-[9px] font-medium leading-tight truncate min-w-0">
                                         {t.inauguration.title}
                                     </p>
-                                    <span className="text-cream/30 shrink-0">|</span>
-                                    <div className="flex items-center gap-1 text-gold/90 shrink-0">
-                                        <Calendar size={11} />
-                                        <span className="text-[11px] font-semibold tracking-wide uppercase whitespace-nowrap">
-                                            {t.inauguration.date}
-                                        </span>
-                                    </div>
-                                    <span className="text-cream/30 shrink-0">|</span>
+                                    <PartyPopper size={11} className="text-gold scale-x-[-1] shrink-0" />
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <Calendar size={9} className="text-gold/90 shrink-0" />
+                                    <span className="text-gold/90 text-[8px] font-semibold tracking-wide uppercase whitespace-nowrap">
+                                        {t.inauguration.date}
+                                    </span>
                                     {eventPassed ? (
-                                        <motion.p
-                                            animate={{ scale: [1, 1.02, 1] }}
-                                            transition={{ duration: 1.5, repeat: Infinity }}
-                                            className="text-gold font-bold text-xs shrink-0"
-                                        >
+                                        <span className="text-gold font-bold text-[9px]">
                                             {t.inauguration.eventStarted}
-                                        </motion.p>
+                                        </span>
                                     ) : (
-                                        <div className="flex items-center gap-0.5 shrink-0">
+                                        <div className="flex items-center gap-0">
                                             <CountdownUnit value={timeLeft.days} label={t.inauguration.days} />
                                             <Separator />
                                             <CountdownUnit value={timeLeft.hours} label={t.inauguration.hours} />
@@ -192,64 +203,18 @@ export default function InaugurationBanner() {
                                             <CountdownUnit value={timeLeft.seconds} label={t.inauguration.seconds} />
                                         </div>
                                     )}
-                                    <motion.div
-                                        animate={{ rotate: [0, 10, -10, 10, 0] }}
-                                        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
-                                        className="shrink-0"
-                                    >
-                                        <PartyPopper size={14} className="text-gold scale-x-[-1]" />
-                                    </motion.div>
-                                </div>
-
-                                {/* Mobile: compact two-line layout */}
-                                <div className="flex sm:hidden flex-col items-center gap-0.5 pr-5">
-                                    <div className="flex items-center gap-1 w-full justify-center">
-                                        <PartyPopper size={11} className="text-gold shrink-0" />
-                                        <motion.span
-                                            animate={{ scale: [1, 1.05, 1] }}
-                                            transition={{ duration: 2, repeat: Infinity }}
-                                            className="bg-gold text-brown-deep text-[7px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0"
-                                        >
-                                            {t.inauguration.newManagement}
-                                        </motion.span>
-                                        <p className="text-cream text-[9px] font-medium leading-tight truncate min-w-0">
-                                            {t.inauguration.title}
-                                        </p>
-                                        <PartyPopper size={11} className="text-gold scale-x-[-1] shrink-0" />
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <Calendar size={9} className="text-gold/90 shrink-0" />
-                                        <span className="text-gold/90 text-[8px] font-semibold tracking-wide uppercase whitespace-nowrap">
-                                            {t.inauguration.date}
-                                        </span>
-                                        {eventPassed ? (
-                                            <span className="text-gold font-bold text-[9px]">
-                                                {t.inauguration.eventStarted}
-                                            </span>
-                                        ) : (
-                                            <div className="flex items-center gap-0">
-                                                <CountdownUnit value={timeLeft.days} label={t.inauguration.days} />
-                                                <Separator />
-                                                <CountdownUnit value={timeLeft.hours} label={t.inauguration.hours} />
-                                                <Separator />
-                                                <CountdownUnit value={timeLeft.minutes} label={t.inauguration.minutes} />
-                                                <Separator />
-                                                <CountdownUnit value={timeLeft.seconds} label={t.inauguration.seconds} />
-                                            </div>
-                                        )}
-                                    </div>
                                 </div>
                             </div>
-
-                            {/* Close button */}
-                            <button
-                                onClick={() => setDismissed(true)}
-                                className="absolute top-1/2 -translate-y-1/2 right-1 sm:right-2 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 text-cream hover:text-white transition-all duration-200"
-                                aria-label="Close"
-                            >
-                                <X size={16} />
-                            </button>
                         </div>
+
+                        {/* Close button - always visible */}
+                        <button
+                            onClick={() => setDismissed(true)}
+                            className="absolute top-1/2 -translate-y-1/2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-black/25 hover:bg-black/40 text-white transition-all duration-200 active:scale-90"
+                            aria-label="Close"
+                        >
+                            <X size={16} strokeWidth={2.5} />
+                        </button>
                     </div>
                 </motion.div>
             )}
