@@ -244,10 +244,10 @@ export default function InaugurationBanner() {
                             {/* Close button */}
                             <button
                                 onClick={() => setDismissed(true)}
-                                className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-3 w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full bg-cream/15 hover:bg-cream/30 text-cream/70 hover:text-cream transition-all duration-200"
+                                className="absolute top-1/2 -translate-y-1/2 right-1 sm:right-2 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 text-cream hover:text-white transition-all duration-200"
                                 aria-label="Close"
                             >
-                                <X size={14} />
+                                <X size={16} />
                             </button>
                         </div>
                     </div>
