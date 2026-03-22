@@ -78,9 +78,11 @@ const languages: { code: LangCode; label: string }[] = [
 export default function Header() {
     const { lang, setLang, t } = useLanguage();
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [langOpen, setLangOpen] = useState(false);
     const langRef = useRef<HTMLDivElement>(null);
+    const lastScrollY = useRef(0);
 
     const navLinks = [
         { href: "#hero", label: t.nav.home },
@@ -91,8 +93,21 @@ export default function Header() {
     ];
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 50);
-        window.addEventListener("scroll", handleScroll);
+        const handleScroll = () => {
+            const currentY = window.scrollY;
+            setScrolled(currentY > 50);
+            
+            const delta = currentY - lastScrollY.current;
+            if (Math.abs(delta) < 5) return;
+            
+            if (delta > 0 && currentY > 100) {
+                setHidden(true);
+            } else {
+                setHidden(false);
+            }
+            lastScrollY.current = currentY;
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
@@ -118,8 +133,12 @@ export default function Header() {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{ top: "var(--banner-height, 0px)" }}
-            className={`fixed left-0 right-0 z-50 transition-[top,background-color,padding,box-shadow] duration-500 ${scrolled
+            style={{ 
+                top: "var(--banner-height, 0px)",
+                transform: hidden ? "translateY(-100%)" : "translateY(0)",
+                transition: "transform 0.3s ease-in-out, top 0.5s, background-color 0.5s, padding 0.5s, box-shadow 0.5s"
+            }}
+            className={`fixed left-0 right-0 z-50 ${scrolled
                 ? "bg-brown-deep/95 backdrop-blur-md shadow-lg py-3"
                 : "bg-transparent py-5"
                 }`}

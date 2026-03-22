@@ -66,8 +66,7 @@ export default function InaugurationBanner() {
 
     useEffect(() => {
         if (mounted && !expired) {
-            const timeout = setTimeout(() => setVisible(true), 500);
-            return () => clearTimeout(timeout);
+            setVisible(true);
         }
     }, [mounted, expired]);
 
