@@ -28,6 +28,18 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
     const [activeCategory, setActiveCategory] = useState(categories[0]?.id || "");
     const [mobileAccordion, setMobileAccordion] = useState<string | null>(categories[0]?.id || null);
     const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
+    const contentRef = useRef<HTMLDivElement>(null);
+
+    const handleDesktopCategory = useCallback((catId: string) => {
+        setActiveCategory(catId);
+        if (contentRef.current) {
+            const bannerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--banner-height") || "0", 10);
+            const headerH = 64;
+            const offset = bannerH + headerH + 16;
+            const top = contentRef.current.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: "smooth" });
+        }
+    }, []);
 
     const handleMobileAccordion = useCallback((catId: string) => {
         const isOpening = mobileAccordion !== catId;
@@ -91,7 +103,7 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                         {categories.map((cat) => (
                             <button
                                 key={cat.id}
-                                onClick={() => setActiveCategory(cat.id)}
+                                onClick={() => handleDesktopCategory(cat.id)}
                                 className={`w-full text-left px-5 py-4 rounded-sm transition-all duration-300 group flex items-center justify-between ${activeCategory === cat.id
                                     ? `bg-${accentColor} text-cream shadow-lg`
                                     : "bg-white-warm hover:bg-sand-light text-brown-deep"
@@ -136,7 +148,7 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                     </motion.div>
 
                     {/* Content */}
-                    <div className="min-h-[400px]">
+                    <div ref={contentRef} className="min-h-[400px]">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeCategory}
