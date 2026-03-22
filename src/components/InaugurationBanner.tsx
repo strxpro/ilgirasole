@@ -45,11 +45,13 @@ export default function InaugurationBanner() {
     const lastScrollY = useRef(0);
 
     const updateBannerHeight = useCallback(() => {
-        if (bannerRef.current) {
+        if (bannerRef.current && !dismissed) {
             const h = bannerRef.current.offsetHeight;
             document.documentElement.style.setProperty("--banner-height", `${h}px`);
+        } else {
+            document.documentElement.style.setProperty("--banner-height", "0px");
         }
-    }, []);
+    }, [dismissed]);
 
     // Client-only: check expiration and start countdown
     useEffect(() => {
@@ -250,11 +252,13 @@ export default function InaugurationBanner() {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     setDismissed(true);
+                                    document.documentElement.style.setProperty("--banner-height", "0px");
                                 }}
-                                className="shrink-0 mr-8 sm:mr-10 w-7 h-7 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 border border-white/20 text-white transition-all duration-200 active:scale-90 pointer-events-auto cursor-pointer"
+                                className="shrink-0 mr-8 sm:mr-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 border-2 border-white/30 text-white transition-all duration-200 active:scale-90 pointer-events-auto cursor-pointer z-[80] touch-auto"
                                 aria-label="Close"
+                                style={{ WebkitTapHighlightColor: 'transparent' }}
                             >
-                                <X size={14} strokeWidth={2.5} />
+                                <X size={16} strokeWidth={3} />
                             </button>
                         </div>
                     </div>
