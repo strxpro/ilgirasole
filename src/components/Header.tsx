@@ -138,6 +138,13 @@ export default function Header() {
                     </div>
                 </a>
 
+                {/* Mobile center text */}
+                <div className="sm:hidden absolute left-1/2 -translate-x-1/2">
+                    <h1 className="font-serif text-base font-semibold text-cream leading-none tracking-wide">
+                        Il Girasole
+                    </h1>
+                </div>
+
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
