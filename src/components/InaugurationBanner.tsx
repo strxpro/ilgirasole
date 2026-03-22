@@ -245,8 +245,13 @@ export default function InaugurationBanner() {
 
                             {/* Close button - in flex row, never clipped */}
                             <button
-                                onClick={() => setDismissed(true)}
-                                className="shrink-0 mr-8 sm:mr-10 w-7 h-7 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 border border-white/20 text-white transition-all duration-200 active:scale-90"
+                                type="button"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setDismissed(true);
+                                }}
+                                className="shrink-0 mr-8 sm:mr-10 w-7 h-7 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 border border-white/20 text-white transition-all duration-200 active:scale-90 pointer-events-auto cursor-pointer"
                                 aria-label="Close"
                             >
                                 <X size={14} strokeWidth={2.5} />
