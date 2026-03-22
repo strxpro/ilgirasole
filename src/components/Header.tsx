@@ -78,11 +78,9 @@ const languages: { code: LangCode; label: string }[] = [
 export default function Header() {
     const { lang, setLang, t } = useLanguage();
     const [scrolled, setScrolled] = useState(false);
-    const [hidden, setHidden] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [langOpen, setLangOpen] = useState(false);
     const langRef = useRef<HTMLDivElement>(null);
-    const lastScrollY = useRef(0);
 
     const navLinks = [
         { href: "#hero", label: t.nav.home },
@@ -93,20 +91,7 @@ export default function Header() {
     ];
 
     useEffect(() => {
-        const handleScroll = () => {
-            const currentY = window.scrollY;
-            setScrolled(currentY > 50);
-            
-            const delta = currentY - lastScrollY.current;
-            if (Math.abs(delta) < 5) return;
-            
-            if (delta > 0 && currentY > 100) {
-                setHidden(true);
-            } else {
-                setHidden(false);
-            }
-            lastScrollY.current = currentY;
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -134,8 +119,8 @@ export default function Header() {
             animate={{ y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             style={{ 
-                top: hidden ? "-200px" : "var(--banner-height, 0px)",
-                transition: "top 0.598s ease-in-out, background-color 0.5s, padding 0.5s, box-shadow 0.5s"
+                top: "var(--banner-height, 0px)",
+                transition: "top 0.5s, background-color 0.5s, padding 0.5s, box-shadow 0.5s"
             }}
             className={`fixed left-0 right-0 z-50 ${scrolled
                 ? "bg-brown-deep/95 backdrop-blur-md shadow-lg py-3"
