@@ -60,20 +60,27 @@ export default function InaugurationBanner() {
         if (!visible || dismissed) return;
         const handleScroll = () => {
             const currentY = window.scrollY;
-            if (currentY > lastScrollY.current && currentY > 100) {
+            const delta = currentY - lastScrollY.current;
+            // Only react to meaningful scroll (>5px) to avoid jitter
+            if (Math.abs(delta) < 5) return;
+            if (delta > 0 && currentY > 80) {
                 // Scrolling down
-                setHidden(true);
-                document.documentElement.style.setProperty("--banner-height", "0px");
+                if (!hidden) {
+                    setHidden(true);
+                    document.documentElement.style.setProperty("--banner-height", "0px");
+                }
             } else {
                 // Scrolling up
-                setHidden(false);
-                document.documentElement.style.setProperty("--banner-height", `${bannerHeight.current}px`);
+                if (hidden) {
+                    setHidden(false);
+                    document.documentElement.style.setProperty("--banner-height", `${bannerHeight.current}px`);
+                }
             }
             lastScrollY.current = currentY;
         };
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [visible, dismissed]);
+    }, [visible, dismissed, hidden]);
 
     useEffect(() => {
         if (isBannerExpired()) {
@@ -126,9 +133,9 @@ export default function InaugurationBanner() {
             {visible && (
                 <motion.div
                     initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: hidden ? -bannerHeight.current : 0, opacity: hidden ? 0 : 1 }}
+                    animate={{ y: hidden ? -bannerHeight.current : 0, opacity: 1 }}
                     exit={{ y: -100, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                     ref={bannerRef}
                     className="fixed top-0 left-0 right-0 z-[70]"
                 >
@@ -237,7 +244,7 @@ export default function InaugurationBanner() {
                             {/* Close button */}
                             <button
                                 onClick={() => setDismissed(true)}
-                                className="absolute top-1/2 -translate-y-1/2 right-1.5 sm:right-2 text-cream/50 hover:text-cream transition-colors duration-200 p-1"
+                                className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-3 w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full bg-cream/15 hover:bg-cream/30 text-cream/70 hover:text-cream transition-all duration-200"
                                 aria-label="Close"
                             >
                                 <X size={14} />
