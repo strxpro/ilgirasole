@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { MenuCategory } from "@/data/menuData";
@@ -27,6 +27,17 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
     const showPln = lang === "pl";
     const [activeCategory, setActiveCategory] = useState(categories[0]?.id || "");
     const [mobileAccordion, setMobileAccordion] = useState<string | null>(categories[0]?.id || null);
+    const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+    const handleMobileAccordion = useCallback((catId: string) => {
+        const isOpening = mobileAccordion !== catId;
+        setMobileAccordion(isOpening ? catId : null);
+        if (isOpening) {
+            setTimeout(() => {
+                categoryRefs.current[catId]?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 350);
+        }
+    }, [mobileAccordion]);
 
     // Reset to first category when menu type changes (ristorante ↔ bar)
     useEffect(() => {
@@ -69,7 +80,7 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="space-y-2"
+                        className="space-y-2 sticky top-24 self-start"
                     >
                         {categories.map((cat) => (
                             <button
@@ -186,11 +197,9 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                 {/* Mobile: Accordion */}
                 <div className="md:hidden space-y-3">
                     {categories.map((cat) => (
-                        <div key={cat.id} className="rounded-sm overflow-hidden bg-white-warm">
+                        <div key={cat.id} ref={(el) => { categoryRefs.current[cat.id] = el; }} className="rounded-sm overflow-hidden bg-white-warm">
                             <button
-                                onClick={() =>
-                                    setMobileAccordion(mobileAccordion === cat.id ? null : cat.id)
-                                }
+                                onClick={() => handleMobileAccordion(cat.id)}
                                 className="w-full flex items-center justify-between px-5 py-4 text-left"
                                 style={
                                     mobileAccordion === cat.id
