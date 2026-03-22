@@ -40,9 +40,7 @@ export default function InaugurationBanner() {
     const [expired, setExpired] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [hidden, setHidden] = useState(false);
     const bannerRef = useRef<HTMLDivElement>(null);
-    const lastScrollY = useRef(0);
 
     const updateBannerHeight = useCallback(() => {
         if (bannerRef.current && !dismissed) {
@@ -89,32 +87,7 @@ export default function InaugurationBanner() {
         }
     }, [t, visible, dismissed, updateBannerHeight]);
 
-    // Scroll-based hide/show
-    useEffect(() => {
-        if (!visible || dismissed) return;
-        const handleScroll = () => {
-            const currentY = window.scrollY;
-            const delta = currentY - lastScrollY.current;
-            if (Math.abs(delta) < 5) return;
-            
-            if (delta > 0 && currentY > 80) {
-                if (!hidden) {
-                    setHidden(true);
-                    document.documentElement.style.setProperty("--banner-height", "0px");
-                }
-            } else {
-                if (hidden) {
-                    setHidden(false);
-                    if (bannerRef.current) {
-                        document.documentElement.style.setProperty("--banner-height", `${bannerRef.current.offsetHeight}px`);
-                    }
-                }
-            }
-            lastScrollY.current = currentY;
-        };
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [visible, dismissed, hidden]);
+    // No scroll-based hide/show - banner stays visible until dismissed
 
     // Don't render anything on server or before mount
     if (!mounted || expired) return null;
@@ -131,9 +104,9 @@ export default function InaugurationBanner() {
             {showBanner && (
                 <motion.div
                     initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
+                    animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -100, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                    transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                     ref={bannerRef}
                     className="fixed top-0 left-0 right-0 z-[70]"
                     onAnimationComplete={(def) => {
