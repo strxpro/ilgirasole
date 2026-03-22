@@ -114,10 +114,7 @@ export default function Header() {
     const CurrentFlag = flagComponents[lang];
 
     return (
-        <motion.header
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+        <header
             style={{ 
                 top: "var(--banner-height, 0px)",
                 transition: "top 0.5s, background-color 0.5s, padding 0.5s, box-shadow 0.5s"
@@ -315,6 +312,6 @@ export default function Header() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.header>
+        </header>
     );
 }
