@@ -148,7 +148,7 @@ export default function InaugurationBanner() {
 
                         {/* Content + Close button in flex row */}
                         <div className="flex items-center">
-                            <div className="flex-1 min-w-0 max-w-7xl mx-auto pl-3 pr-1 sm:pl-6 sm:pr-2 py-1.5 sm:py-2">
+                            <div className="flex-1 min-w-0 max-w-7xl mx-auto pl-3 pr-0 sm:pl-6 sm:pr-1 py-1.5 sm:py-2">
                                 {/* Desktop: single row */}
                                 <div className="hidden sm:flex items-center justify-center gap-3">
                                 <motion.div
@@ -246,7 +246,7 @@ export default function InaugurationBanner() {
                             {/* Close button - in flex row, never clipped */}
                             <button
                                 onClick={() => setDismissed(true)}
-                                className="shrink-0 mr-3 sm:mr-4 w-7 h-7 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 border border-white/20 text-white transition-all duration-200 active:scale-90"
+                                className="shrink-0 mr-4 sm:mr-5 w-7 h-7 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 border border-white/20 text-white transition-all duration-200 active:scale-90"
                                 aria-label="Close"
                             >
                                 <X size={14} strokeWidth={2.5} />
