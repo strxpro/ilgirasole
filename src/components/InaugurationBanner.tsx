@@ -118,8 +118,9 @@ export default function InaugurationBanner() {
                                 <div className="w-1.5 h-1.5 rounded-full bg-gold" />
                             </div>
 
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2">
-                                <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 sm:py-2">
+                                {/* Desktop: single row */}
+                                <div className="hidden sm:flex items-center justify-center gap-3">
                                     <motion.div
                                         animate={{ rotate: [0, -10, 10, -10, 0] }}
                                         transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
@@ -129,26 +130,26 @@ export default function InaugurationBanner() {
                                     <motion.span
                                         animate={{ scale: [1, 1.05, 1] }}
                                         transition={{ duration: 2, repeat: Infinity }}
-                                        className="bg-gold text-brown-deep text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                                        className="bg-gold text-brown-deep text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
                                     >
                                         {t.inauguration.newManagement}
                                     </motion.span>
-                                    <p className="text-cream text-[11px] sm:text-xs font-medium text-center leading-snug">
+                                    <p className="text-cream text-xs font-medium leading-snug">
                                         {t.inauguration.title}
                                     </p>
-                                    <span className="text-cream/30 hidden sm:inline">|</span>
+                                    <span className="text-cream/30">|</span>
                                     <div className="flex items-center gap-1 text-gold/90">
                                         <Calendar size={11} />
-                                        <span className="text-[10px] sm:text-[11px] font-semibold tracking-wide uppercase">
+                                        <span className="text-[11px] font-semibold tracking-wide uppercase">
                                             {t.inauguration.date}
                                         </span>
                                     </div>
-                                    <span className="text-cream/30 hidden sm:inline">|</span>
+                                    <span className="text-cream/30">|</span>
                                     {eventPassed ? (
                                         <motion.p
                                             animate={{ scale: [1, 1.02, 1] }}
                                             transition={{ duration: 1.5, repeat: Infinity }}
-                                            className="text-gold font-bold text-[11px] sm:text-xs"
+                                            className="text-gold font-bold text-xs"
                                         >
                                             {t.inauguration.eventStarted}
                                         </motion.p>
@@ -169,6 +170,45 @@ export default function InaugurationBanner() {
                                     >
                                         <PartyPopper size={14} className="text-gold scale-x-[-1]" />
                                     </motion.div>
+                                </div>
+
+                                {/* Mobile: compact two-line layout */}
+                                <div className="flex sm:hidden flex-col items-center gap-0.5">
+                                    <div className="flex items-center gap-1.5">
+                                        <PartyPopper size={12} className="text-gold shrink-0" />
+                                        <motion.span
+                                            animate={{ scale: [1, 1.05, 1] }}
+                                            transition={{ duration: 2, repeat: Infinity }}
+                                            className="bg-gold text-brown-deep text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider"
+                                        >
+                                            {t.inauguration.newManagement}
+                                        </motion.span>
+                                        <p className="text-cream text-[10px] font-medium leading-tight">
+                                            {t.inauguration.title}
+                                        </p>
+                                        <PartyPopper size={12} className="text-gold scale-x-[-1] shrink-0" />
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                        <Calendar size={10} className="text-gold/90" />
+                                        <span className="text-gold/90 text-[9px] font-semibold tracking-wide uppercase">
+                                            {t.inauguration.date}
+                                        </span>
+                                        {eventPassed ? (
+                                            <span className="text-gold font-bold text-[10px]">
+                                                {t.inauguration.eventStarted}
+                                            </span>
+                                        ) : (
+                                            <div className="flex items-center gap-0.5">
+                                                <CountdownUnit value={timeLeft.days} label={t.inauguration.days} />
+                                                <Separator />
+                                                <CountdownUnit value={timeLeft.hours} label={t.inauguration.hours} />
+                                                <Separator />
+                                                <CountdownUnit value={timeLeft.minutes} label={t.inauguration.minutes} />
+                                                <Separator />
+                                                <CountdownUnit value={timeLeft.seconds} label={t.inauguration.seconds} />
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 

@@ -34,7 +34,13 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
         setMobileAccordion(isOpening ? catId : null);
         if (isOpening) {
             setTimeout(() => {
-                categoryRefs.current[catId]?.scrollIntoView({ behavior: "smooth", block: "start" });
+                const el = categoryRefs.current[catId];
+                if (!el) return;
+                const bannerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--banner-height") || "0", 10);
+                const headerH = 64;
+                const offset = bannerH + headerH + 8;
+                const top = el.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: "smooth" });
             }, 350);
         }
     }, [mobileAccordion]);
