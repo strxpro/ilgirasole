@@ -135,7 +135,7 @@ export default function Header() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             style={{ 
                 top: "var(--banner-height, 0px)",
-                transform: hidden ? "translateY(-100%)" : "translateY(0)",
+                transform: hidden ? "translateY(calc(-100% - var(--banner-height, 0px)))" : "translateY(0)",
                 transition: "transform 0.3s ease-in-out, top 0.5s, background-color 0.5s, padding 0.5s, box-shadow 0.5s"
             }}
             className={`fixed left-0 right-0 z-50 ${scrolled
