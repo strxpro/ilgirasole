@@ -41,6 +41,7 @@ export default function InaugurationBanner() {
     const [mounted, setMounted] = useState(false);
     const [visible, setVisible] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const hiddenRef = useRef(false);
     const bannerRef = useRef<HTMLDivElement>(null);
     const lastScrollY = useRef(0);
     const bannerHeight = useRef(0);
@@ -49,11 +50,11 @@ export default function InaugurationBanner() {
         if (bannerRef.current) {
             const h = bannerRef.current.offsetHeight;
             bannerHeight.current = h;
-            if (!hidden) {
+            if (!hiddenRef.current) {
                 document.documentElement.style.setProperty("--banner-height", `${h}px`);
             }
         }
-    }, [hidden]);
+    }, []);
 
     // Scroll direction detection: hide on scroll down, show on scroll up
     useEffect(() => {
@@ -61,17 +62,16 @@ export default function InaugurationBanner() {
         const handleScroll = () => {
             const currentY = window.scrollY;
             const delta = currentY - lastScrollY.current;
-            // Only react to meaningful scroll (>5px) to avoid jitter
             if (Math.abs(delta) < 5) return;
             if (delta > 0 && currentY > 80) {
-                // Scrolling down
-                if (!hidden) {
+                if (!hiddenRef.current) {
+                    hiddenRef.current = true;
                     setHidden(true);
                     document.documentElement.style.setProperty("--banner-height", "0px");
                 }
             } else {
-                // Scrolling up
-                if (hidden) {
+                if (hiddenRef.current) {
+                    hiddenRef.current = false;
                     setHidden(false);
                     document.documentElement.style.setProperty("--banner-height", `${bannerHeight.current}px`);
                 }
@@ -80,7 +80,7 @@ export default function InaugurationBanner() {
         };
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [visible, dismissed, hidden]);
+    }, [visible, dismissed]);
 
     useEffect(() => {
         if (isBannerExpired()) {
