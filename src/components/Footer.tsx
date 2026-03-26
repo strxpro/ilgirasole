@@ -101,11 +101,11 @@ export default function Footer() {
                             </li>
                             <li>
                                 <a
-                                    href="mailto:info@ilgirasole-sardegna.it"
+                                    href="mailto:info@ristoranteilgirasole.com"
                                     className="flex items-center gap-2 text-cream/50 hover:text-gold text-sm transition-colors duration-300"
                                 >
                                     <Mail size={14} />
-                                    <span>info@ilgirasole-sardegna.it</span>
+                                    <span>info@ristoranteilgirasole.com</span>
                                 </a>
                             </li>
                             <li className="flex items-start gap-2 text-cream/50 text-sm">

@@ -169,7 +169,7 @@ Mapa jest już ustawiona na **Via Italia, 7, 07028 Santa Teresa Gallura**. Aby j
 **Aktualne dane kontaktowe** (zmień w tym samym pliku):
 - Adres: szukaj tekstu `Via Italia, 7`
 - Telefon: szukaj `+39 0789 754 321`
-- Email: szukaj `info@ilgirasole-sardegna.it`
+- Email: szukaj `info@ristoranteilgirasole.com`
 - Godziny otwarcia: szukaj tablicy z `day` i `hours`
 
 ---

@@ -92,14 +92,14 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
 
                 {/* Desktop: Split View */}
                 <div className="hidden md:grid md:grid-cols-[260px_1fr] gap-8">
-                    {/* Sidebar */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="space-y-2 sticky top-24 self-start"
-                    >
+                    <aside className="hidden md:block sticky top-32 self-start space-y-2">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="space-y-2"
+                        >
                         {categories.map((cat) => (
                             <button
                                 key={cat.id}
@@ -145,7 +145,8 @@ export default function InteractiveMenu({ categories, type }: InteractiveMenuPro
                                 )}
                             </div>
                         </div>
-                    </motion.div>
+                        </motion.div>
+                    </aside>
 
                     {/* Content */}
                     <div ref={contentRef} className="min-h-[400px]">
