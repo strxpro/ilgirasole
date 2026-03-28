@@ -1,24 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function ReviewsCarousel() {
     const { t } = useLanguage();
-    const widgetRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (!widgetRef.current) return;
-        const existing = widgetRef.current.querySelector("script");
-        if (existing) return;
-        const script = document.createElement("script");
-        script.src = "https://cdn.trustindex.io/loader.js?e43ab6767464773eda36526823c";
-        script.async = true;
-        script.defer = true;
-        widgetRef.current.appendChild(script);
-    }, []);
 
     return (
         <section id="reviews" className="relative py-20 sm:py-28 overflow-hidden">
@@ -55,11 +42,21 @@ export default function ReviewsCarousel() {
                     </div>
                 </motion.div>
 
-                {/* Trustindex Google Reviews Widget */}
-                <div ref={widgetRef} className="mb-10" />
+                {/* Review links */}
+                <div className="flex flex-col items-center gap-3">
+                    {/* Google Reviews link */}
+                    <a
+                        href="https://www.google.com/maps/place/Il+Girasole/@41.2414,9.1876,17z/data=!4m8!3m7!1s0x12d94b0d7a3b1b97:0x8f5b9b2b3b3b3b3b!8m2!3d41.2414!4d9.1876!9m1!1b1!16s%2Fg%2F11c1p1h1_1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-brown-medium/40 hover:text-[#4285F4] transition-colors duration-300"
+                    >
+                        <span className="text-lg">⭐</span>
+                        <span>{t.reviews.leaveReviewOn} {t.reviews.googleReviews}</span>
+                        <ExternalLink size={12} />
+                    </a>
 
-                {/* TripAdvisor link */}
-                <div className="text-center">
+                    {/* TripAdvisor link */}
                     <a
                         href="https://www.tripadvisor.com/Restaurant_Review-g608922-d1837416-Reviews-Il_Girasole-Santa_Teresa_Gallura_Province_of_Olbia_Tempio_Sardinia.html"
                         target="_blank"
